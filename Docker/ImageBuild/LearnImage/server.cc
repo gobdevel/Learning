@@ -4,7 +4,7 @@
 #define OK_RESPONSE     "OK\r\n"
 #define MAX_BUFFER_SIZE 2048
 #define MAX_SPACES      2
-#define GREETING        "Hello Kubernetes (v2) "
+#define GREETING        "Hello Kubernetes (v1) "
 
 // Global buffer
 char     g_buffer[MAX_BUFFER_SIZE];
