@@ -157,7 +157,22 @@ It manages replica-set and this should be the object created by users. It is sup
   ```bash
   kubectl set image deployment/<deployment-name> name=gob/echo-server:v2
   ```
+## Services
+A service can be defined as a logical set of pods. It can be defined as an abstraction on the top of the pod which provides a single IP address and DNS name by which pods can be accessed. With Service, it is very easy to manage load balancing configuration. It helps pods to scale very easily.
 
+A service is a REST object in Kubernetes whose definition can be posted to Kubernetes apiServer on the Kubernetes master to create a new instance.
+
+- Create NodePort Service
+  ```bash
+  kubectl create -f 5-service.yaml
+  ```
+
+- View Service
+  ```bash
+  kubectl get services <service-name> -n <namespace> -o wide
+  kubectl decribe services <service-name> -n <namespace>
+  ```
+  
 ## Logging
 ```bash
 kubectl get pods
@@ -213,14 +228,15 @@ This object is used by pods to read configs like env variables. During change of
   ```
 
 
-##### SERVICE DISCOVERY
-All services created in Kubernetes have its entry in DNS
+## SERVICE DISCOVERY
+All services created in Kubernetes have its entry in DNS and can be accessed via its dns name -
+```bash
 <service-name>.<namespace>.svc.cluster.local:<port>
+```
 
-If you are in same namespace you can directly use-
-<service-name>:<port>
+If you are in same namespace you can directly use- `<service-name>:<port>`
 
-#### Liveness and Readiness
+## Liveness and Readiness
 Liveness probe runs before readiness probe.
 R u alive ? R u ready ?
 
