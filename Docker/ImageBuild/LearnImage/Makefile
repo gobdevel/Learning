@@ -1,4 +1,4 @@
-CXXFLAGS = -Wall -Werror -std=c++03 -O1
+CXXFLAGS = -Wall -Werror -std=c++17 -O1
 LDLIBS =
 
 PRGM  = project

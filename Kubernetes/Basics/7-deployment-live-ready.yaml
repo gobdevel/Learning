@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo-server
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: echo-server
+  template:
+    metadata:
+      labels:
+        app: echo-server
+        env: dev
+    spec:
+      containers:
+      - name: echo-server
+        image: gob/echo-server:v2
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: my-config
+        volumeMounts:
+          - name: mysecret-volume
+            mountPath: /mystuff/secret-stuff
+            readOnly: true
+        livenessProbe:
+          httpGet:
+            port: 8080
+            path: /
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 2
+        readinessProbe:
+          httpGet:
+            port: 8080
+            path: /healthz
+          initialDelaySeconds: 10
+          periodSeconds: 3
+    volumes:
+      - name: mysecret-volume
+        secret:
+        secretName: my-secret
+

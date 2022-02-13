@@ -1,0 +1,9 @@
+# https://kubernetes.io/docs/concepts/workloads/pods/
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "my-pod"
+spec:
+  containers:
+  - name: my-container
+    image: "gob/echo-server:v1"
