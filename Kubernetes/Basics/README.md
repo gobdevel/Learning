@@ -1,7 +1,11 @@
+- [Kubernetes Tutorials](https://redhat-scholars.github.io/kubernetes-tutorial/kubernetes-tutorial/pod-rs-deployment.html)
+- [Kind Quick Start](https://kind.sigs.k8s.io/docs/user/quick-start/)
+- [Reference Repo](https://github.com/redhat-scholars/kubernetes-tutorial)
+
 # Installation
     Install Docker for your OS
     Install Kubernetes (kubectl)
-    Install Kind (for local cluster setup) [Kind Quick Start](https://kind.sigs.k8s.io/docs/user/quick-start/)
+    Install Kind (for local cluster setup)
 
 # Cluster Setup
 - Create Cluster using below command
@@ -37,15 +41,6 @@ nodes:
   ```bash
   kind create cluster --config <file> --name <name>
   ```
-
-# Basic Commands
-```bash
-kubectl get depolyments
-kubectl get events
-kubectl get pods
-kubectl get servcices
-```
-
 
 # Different types of Resources in Kubernetes
 - Namespaces
@@ -95,10 +90,10 @@ Pod is a smallest unit in Kubernetes, you can create a pod with a container insi
 
 - Create pod command line
   ```bash
-  kubectl create pod my-pod --image=gob/echo-server:v1
+  kubectl run my-pod --image=gob/echo-server:v1
   kubectl create -f <file-name>
   ```
-  
+
 - Check Pod
   ```bash
   kubectl get pods -n <namespace>
