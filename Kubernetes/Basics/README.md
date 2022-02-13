@@ -1,4 +1,4 @@
-- [Kubernetes Tutorials](https://redhat-scholars.github.io/kubernetes-tutorial/kubernetes-tutorial/pod-rs-deployment.html)
+- [Kubernetes Tutorials](https://redhat-scholars.github.io/kubernetes-tutorial/kubernetes-tutorial/index.html)
 - [Kind Quick Start](https://kind.sigs.k8s.io/docs/user/quick-start/)
 - [Reference Repo](https://github.com/redhat-scholars/kubernetes-tutorial)
 
@@ -63,7 +63,7 @@ kubectl expose deployment my-app --port=8080 --type=LoadBalancer
 kubectl config set-context --current --namespace=my-namespace
 
 
-# Create and set namespace 
+## Create and set namespace 
 
 1. Create name space
    ```bash
@@ -85,7 +85,7 @@ kubectl config set-context --current --namespace=my-namespace
    ```
 
 
-# Create pods
+## Create pods
 Pod is a smallest unit in Kubernetes, you can create a pod with a container inside using 2-pod.yaml.
 
 - Create pod command line
@@ -104,57 +104,113 @@ Pod is a smallest unit in Kubernetes, you can create a pod with a container insi
   ```bash
   kubectl delete pods <podname> -n <namespace>
   ```
+  
+- Login to pod
+  ```bash
+  kubectl exec --stdin --tty <pod-name> -- /bin/bash
+  ```
 
-### ReplicaSets
-It is controller of pods.
+## ReplicaSets
+It is controller of pods. We should not directly create this object.
 
-### deployments
-It manages replica-set
+- Create Replicaset. This will create Pods according to file definition and will manage these pods. Like automatic restart and all.
+  ```bash
+  kubectl create -f 3-replica-set.yaml
+  ```
+  
+- View replicaset
+  ```bash
+  kubectl get replicaset -n <namespace>
+  kubectl get pods -n <namespace>
+  ```
+  
+- Delete replicaset. This will first delete underlying pods then rs object itself.
+  ```bash
+  kubectl delete replicaset <rs-name> -n <namespace>
+  ```
 
-### Scaling
-kubectl scale --replicas=3 deployment/<deployment-name>
+## Deployments
+It manages replica-set and this should be the object created by users. It is superset of replicaset with additional functionality of rolling update.
+- Create deployment. This will create repplicset according to file definition and will manage these pods. Like automatic restart and all.
+  ```bash
+  kubectl create -f 4-deployment.yaml
+  ```
+  
+- View deployment
+  ```bash
+  kubectl get deployment -n <namespace>
+  kubectl get replicasets -n <namespace>
+  kubectl get pods -n <namespace>
+  ```
+  
+- Delete deployment. This will first delete underlying pods then rs object itself.
+  ```bash
+  kubectl delete deployment <deployment> -n <namespace>
+  ```
+  
+- To change scaling -
+  ```bash
+  kubectl scale --replicas=3 deployment/<deployment-name> -n <namespace>
+  ```
 
-### Chaning image ( rolling update )
-kubectl set image deployment/<deployment-name> name=gob/echo-server:v2 
+- Changing image ( rolling update )
+  ```bash
+  kubectl set image deployment/<deployment-name> name=gob/echo-server:v2
+  ```
 
-
-#### Logging
+## Logging
+```bash
 kubectl get pods
-kubectl logs <pod>
-kubectl logs <pod> -p // Last failed pod logs
-kubectl logs -l app=<app-selector> // Grabs log of all app with selector
+kubectl logs <pod-name>
 
-#### Labels
-Labels are key value pairs and used extensively in Kubernetes as a selector of
-elements/objects.
+// Last failed pod logs
+kubectl logs <pod-name> -p 
 
-# To add a label to Pod
-`kubectl label pod -l app=<app-name> <key=value>`
+// Grabs log of all app with selector
+kubectl logs -l app=<app-selector>
+```
 
-# Remove label
-`kubectl label pod -l app<app-name> <key>-`
+## Labels
+Labels are key value pairs and used extensively in Kubernetes as a selector of elements/objects.
 
-#### Configs
+- To add a label to Pod
+  ```
+  kubectl label pod -l app=<app-name> <key=value>
+  ```
 
-During change of env variable, old pod will terminate and new POD will be re
-created
-Add/Change env variables
-kubectl set env deployment <deployment-name> NAME="VALUE"
+- Remove label
+  ```
+  kubectl label pod -l app<app-name> <key>-
+  ```
 
-Delete ENV variables
-kubectl set env deployment <deployment-name> NAME-
+## Configs - 
+This object is used by pods to read configs like env variables. During change of configs, old pod will terminate and new POD will be recreated.
 
-#### Config Maps
-kubectl create  cm my-config --from-env-file=sample.properties
+  ### env variables
+  - Add/Change env variables
+    ```bash
+    kubectl set env deployment <deployment-name> NAME="VALUE"
+    ```
+  - Delete ENV variables
+    ```bash
+    kubectl set env deployment <deployment-name> NAME-
+    ```
 
+  ### Config Maps
+  config maps are similar to configs - env but created using file
+  ```bash
+  kubectl create  cm my-config --from-env-file=sample.properties
+  ```
 
-#### Secrets
-Similar to config maps, secrets are also config but it is base64 encoded.
-kubectl create secret generic my-secret --from-literal=user='MyUserName'
---from-literal=password='MyPassword'
-
-You can easily decode base64 encoded message using -
-echo 'encoded-text' | base64 --decode
+  ### Secrets
+  Similar to config maps, secrets are also config but it is base64 encoded
+  ```bash
+  kubectl create secret generic my-secret --from-literal=user='MyUserName' --from-literal=password='MyPassword'
+  ```
+  You can easily decode base64 encoded message using -
+  ```bash
+  echo 'encoded-text' | base64 --decode
+  ```
 
 
 ##### SERVICE DISCOVERY
