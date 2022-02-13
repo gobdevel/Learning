@@ -228,7 +228,7 @@ This object is used by pods to read configs like env variables. During change of
   ```
 
 
-## SERVICE DISCOVERY
+## Service Discovery
 All services created in Kubernetes have its entry in DNS and can be accessed via its dns name -
 ```bash
 <service-name>.<namespace>.svc.cluster.local:<port>
@@ -236,16 +236,18 @@ All services created in Kubernetes have its entry in DNS and can be accessed via
 
 If you are in same namespace you can directly use- `<service-name>:<port>`
 
-## Liveness and Readiness
-Liveness probe runs before readiness probe.
-R u alive ? R u ready ?
+## Liveness and Readiness Probe
+Using these two probes, Kubernetes provides/manages high availabilty
 
-Liveness : Are you alive
-Readiness : Are you ready to accept new requests, Are you ready for
-LoadBalancer.
+- **Liveness :** Whether my pod is alive.
+- **Readiness:**  Are you ready to accept new requests, Are you ready for LoadBalancer.
+  Liveness probe runs before readiness probe.
+  R u alive ? R u ready ?
 
-#### DEPLOYMENT STARTEGY => BLUE-GREEN Deployment
-Green is running
+# Deployment Strategies -
+
+## Blue Green Deployment
+    - Gen is running
 Blue is new version of same application but having different app name label
 Single service is service Green one.
 To switch to Blue one, simply patch the running service -
