@@ -1,27 +1,30 @@
 # Installation
-    - Install Docker for your OS
-    - Install Kubernetes (kubectl)
-    - Install Kind (for local cluster setup) [https://kind.sigs.k8s.io/docs/user/quick-start/]
+    Install Docker for your OS
+    Install Kubernetes (kubectl)
+    Install Kind (for local cluster setup) [Kind Quick Start](https://kind.sigs.k8s.io/docs/user/quick-start/)
 
 # Cluster Setup
-Create Cluster using below command
+- Create Cluster using below command
 `kind create cluster --name local-cluster`
 
-Get Cluster info
+- Get Cluster info
 `kind get clusters`
 
-Delete  cluster
+- Delete  cluster
 `kind delete clusters <cluster-name>`
 
-If you are working on multiple cluster set working cluster using below -
-`kubectl cluster-info --context kind-local-cluster`
+- If you are working on multiple cluster set working cluster using below -
+  ```bash
+  kubectl cluster-info --context kind-local-cluster
+  ```
 
-Load your private/local docker images to kind cluster. This can be used locally in Kubernetes cluster. 
-`kind load docker-image echo-server:v1  --name local-cluster`
+- Load your private/local docker images to kind cluster. This can be used locally in Kubernetes cluster.\ 
+  ```bash
+  kind load docker-image echo-server:v1  --name local-cluster
+  ```
 
-### To create a multi-node cluster -
-```
- cat kind-multinode-config.yaml                                                                                    ─╯
+#### To create a multi-node cluster -
+```kind-multinode-config.yaml
 apiVersion: kind.x-k8s.io/v1alpha4
 kind: Cluster
 nodes:
@@ -29,16 +32,22 @@ nodes:
   - role: worker
   - role: worker
 ```
-kind create cluster --config <file> --name <name>
 
-# TEST
+- Create Kind Cluster 
+  ```bash
+  kind create cluster --config <file> --name <name>
+  ```
+
+# Basic Commands
+```bash
 kubectl get depolyments
 kubectl get events
 kubectl get pods
 kubectl get servcices
+```
 
 
-#### Different types of Resources in Kubernetes
+# Different types of Resources in Kubernetes
 - Namespaces
 - Pods
 - Replica-set
@@ -51,7 +60,7 @@ kubectl get servcices
 - nodes
 - cluster
 
-# Manual Creation -
+# CLI to  -
 kubectl create deployment my-app --image=gobdev/kube-learn:v1
 kubectl get events --sort-by=.metadata.creationTimestamp
 kubectl expose deployment my-app --port=8080 --type=LoadBalancer
@@ -59,22 +68,47 @@ kubectl expose deployment my-app --port=8080 --type=LoadBalancer
 kubectl config set-context --current --namespace=my-namespace
 
 
-#### STARTING 
+# Create and set namespace 
 
 1. Create name space
-`kubectl create namespace <namespace>`
+   ```bash
+   kubectl create namespace <namespace>
+   ```
+2. Get namespaces
+   ```bash
+   kubectl get namespaces
+   ```
 
-2. Set namespace to default context so that you dont have to type everytime
-`kubectl config set-context --current --namespace=<namespace>`
+3. Set namespace to default context so that you dont have to type everytime
+   ```bash
+   kubectl config set-context --current --namespace=<namespace>
+   ```
 
-3. Deleting a namespace will delete all its resources (pods, services, pv, pvc
-   etc)
-`kubectl delete namespace <namespace>`
+4. Deleting a namespace will delete all its resources (pods, services, pv, pvc etc)
+   ```bash
+   kubectl delete namespace <namespace>
+   ```
 
 
-#### Create pods
-Pod is a smallest unit in Kubernetes, you can create a pod with a container
-inside using 2-pod.yaml.
+# Create pods
+Pod is a smallest unit in Kubernetes, you can create a pod with a container inside using 2-pod.yaml.
+
+- Create pod command line
+  ```bash
+  kubectl create pod my-pod --image=gob/echo-server:v1
+  kubectl create -f <file-name>
+  ```
+  
+- Check Pod
+  ```bash
+  kubectl get pods -n <namespace>
+  kubectl describe pod <podname> -n <namespace>
+  ```
+ 
+- Remove Pod
+  ```bash
+  kubectl delete pods <podname> -n <namespace>
+  ```
 
 ### ReplicaSets
 It is controller of pods.
