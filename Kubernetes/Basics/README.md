@@ -247,9 +247,10 @@ Using these two probes, Kubernetes provides/manages high availabilty
 # Deployment Strategies -
 
 ## Blue Green Deployment
-    - Gen is running
-Blue is new version of same application but having different app name label
-Single service is service Green one.
-To switch to Blue one, simply patch the running service -
-`kubectl patch svc/<svc-name> -p '{"spec":{"selector":{"app": "new app name
-label"}}}'`
+- Green is running
+- Blue is new version of same application but having different app name label
+- Currently Service is pointing to Green version via app selector
+- To switch to Blue one, simply patch the running service -
+  ```bash
+  kubectl patch svc/<svc-name> -p '{"spec":{"selector":{"app": "new app name label"}}}'
+  ```
