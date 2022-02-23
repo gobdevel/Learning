@@ -38,7 +38,10 @@ TEST(BinarySearchProblem, RightElement) {
 TEST(BinarySearchProblem, SortedMatrix) {
     Matrix empty;
     Matrix nums = {
-        {4, 5, 6, 7, 8, 9}, {10, 11, 12, 13, 14, 15}, {16, 17, 18, 19, 20, 21}};
+        {4,  5,  6,  7,  8,  9 },
+        {10, 11, 12, 13, 14, 15},
+        {16, 17, 18, 19, 20, 21}
+    };
     EXPECT_TRUE(searchInSortedMatrix(nums, 5));
     EXPECT_TRUE(searchInSortedMatrix(nums, 4));
     EXPECT_FALSE(searchInSortedMatrix(nums, 1));

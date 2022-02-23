@@ -1,14 +1,11 @@
-#include "BinaryTree.h"
+#include "BinaryTreeGeneric.h"
 #include "gtest/gtest.h"
 
-TEST(TREE, Basic) {
-    BTree<int, int> bt;
-    bt.insert(10, 100);
-    bt.insert(8, 88);
-    bt.insert(7, 140);
-    bt.insert(9, 140);
-    bt.insert(12, 100);
-    bt.insert(14, 88);
-    bt.insert(16, 140);
-    EXPECT_EQ(bt.getHeight(), 4);
+TEST(BinaryTree, Basic) {
+    BinaryTree<int, int> bt;
+    bt.emplace(23, 233).emplace(48, 488).emplace(19, 199).emplace(40, 400);
+
+    EXPECT_EQ(*bt.find(40), 400);
+    EXPECT_EQ(*bt.find(19), 199);
+    EXPECT_EQ(bt.find(199), nullptr);
 }
