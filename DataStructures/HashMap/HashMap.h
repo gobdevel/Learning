@@ -1,6 +1,8 @@
 #ifndef __HASH_MAP_H__
 #define __HASH_MAP_H__
 
+#include <array>
+#include <memory>
 #include <system_error>
 
 #include "utils.h"

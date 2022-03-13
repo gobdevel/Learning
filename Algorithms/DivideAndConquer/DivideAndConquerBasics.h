@@ -2,6 +2,7 @@
 #define __DIVIDE_AND_CONQUER_H__
 
 #include <algorithm>
+#include <climits>
 #include <iostream>
 #include <vector>
 /**
