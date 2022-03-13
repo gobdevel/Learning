@@ -10,6 +10,7 @@
 # Cluster Setup
 - Create Cluster using below command
 `kind create cluster --name local-cluster`
+`kind create cluster --config cluster-config.yml --name test`
 
 - Get Cluster info
 `kind get clusters`
@@ -24,7 +25,7 @@
 
 - Load your private/local docker images to kind cluster. This can be used locally in Kubernetes cluster.\ 
   ```bash
-  kind load docker-image echo-server:v1  --name local-cluster
+  kind load docker-image gobdevel/echo-server:v1  --name local-cluster
   ```
 
 #### To create a multi-node cluster -

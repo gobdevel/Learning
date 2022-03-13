@@ -1,7 +1,7 @@
 CXXFLAGS = -Wall -Werror -std=c++17 -O1
 LDLIBS =
 
-PRGM  = project
+PRGM  = webApp
 SRCS := $(wildcard *.cc)
 OBJS := $(SRCS:.cc=.o)
 DEPS := $(OBJS:.o=.d)

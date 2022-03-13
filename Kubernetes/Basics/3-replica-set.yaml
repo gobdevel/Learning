@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
       - name: echo-server
-        image: gob/echo-server:v1
+        image: gobdevel/echo-server:v1

@@ -19,16 +19,9 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
-        livenessProbe:
-          httpGet:
-            port: 8080
-            path: /
-          initialDelaySeconds: 10
-          periodSeconds: 5
-          timeoutSeconds: 2
-        readinessProbe:
-          httpGet:
-            port: 8080
-            path: /healthz
-          initialDelaySeconds: 10
-          periodSeconds: 3
+        env:
+        - name: "BROKER_URL"
+          value: "http://env-hardcoded"
+        - name: "Another"
+          value: "Another Value"
+

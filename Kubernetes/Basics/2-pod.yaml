@@ -6,4 +6,4 @@ metadata:
 spec:
   containers:
   - name: my-container
-    image: "gob/echo-server:v1"
+    image: "gobdevel/echo-server:v1"

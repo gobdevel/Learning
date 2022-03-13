@@ -1,5 +1,5 @@
 FROM alpine:latest
 MAINTAINER gobdeveloper@gmail.com
-COPY ./project /bin/kubeLearningApp
+COPY ./webApp /bin/kubeLearningApp
 CMD ["/bin/kubeLearningApp"]
 
