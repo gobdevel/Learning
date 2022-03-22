@@ -8,31 +8,38 @@
 template <typename T = int>
 class KruskalMst {
 public:
-    KruskalMst() = default;
+    KruskalMst()    = default;
+    using Edge      = Edge<T>;
+    using Edges     = Edges<T>;
+    using AdjMatrix = AdjacancyMatrix<T>;
 
-    Edges<T> getMst(AdjacancyMatrix<T>& adjMatrix) {
-        Edges<T> results;
-        // Min heap to store edges of till now selected MST vertex
-        std::priority_queue<Edge<T>> minHeap;
+    Edges getMst(AdjMatrix& adjMatrix) {
+        // Results to hold
+        Edges results;
+        // Priority Queue to sort all edges
+        std::priority_queue<Edge> pq;
 
-        // Sort edges by ascending order
-        for (int i = 0; i < adjMatrix.size(); ++i) {
-            for (int j = 0; j < adjMatrix[i].size(); ++j) {
+        for (auto i = 0; i < adjMatrix.size(); ++i) {
+            for (auto j = 0; j < adjMatrix[i].size(); ++j) {
                 if (adjMatrix[i][j] != 0) {
-                    minHeap.emplace(i, j, adjMatrix[i][j]);
+                    // insert source, destination, weight
+                    pq.emplace(i, j, adjMatrix[i][j]);
                 }
             }
         }
 
-        int count = adjMatrix.size() - 1;
+        // Disjoint Set to check loop in undirected weighted Graph
+        DisjointSet dj(adjMatrix.size());
 
-        DisjointSet dSet(adjMatrix.size());  // To check loop
-        while (!minHeap.empty() && count > 0) {
-            auto edge = std::move(minHeap.top());
-            minHeap.pop();
+        auto count = adjMatrix.size() - 1;
 
-            if (!dSet.isConnected(edge.src, edge.dst)) {
-                dSet.setUnion(edge.src, edge.dst);
+        while (!pq.empty() && count > 0) {
+            auto edge = std::move(pq.top());
+            pq.pop();
+
+            // check if loop is formed, first time always false
+            if (!dj.isConnected(edge.src, edge.dst)) {
+                dj.setUnion(edge.src, edge.dst);
                 results.emplace_back(std::move(edge));
                 --count;
             }

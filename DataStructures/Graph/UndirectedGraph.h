@@ -1,21 +1,21 @@
 #ifndef __UNDIRECTED_GRAPH_H__
 #define __UNDIRECTED_GRAPH_H__
 
-#include <iostream>
 #include <queue>
 #include <stack>
-#include <type_traits>
-#include <vector>
 
-template <typename T>
-using remove_cv_ref_t = typename std::remove_cv_t<std::remove_reference_t<T>>;
+#include "Graph.h"
+#include "utils.h"
 
 template <typename T>
 class UndirectedGraph {
 public:
-    using AdjacancyList = std::vector<std::vector<T>>;
-    UndirectedGraph(std::size_t nodes)
-        : m_nodes(nodes), m_adjList(nodes, std::vector<T>{}) {}
+    using Vertex   = Vertex<T>;
+    using Vertices = Vertices<T>;
+    using AdjList  = AdjacancyList<T>;
+
+    UndirectedGraph(std::size_t size)
+        : m_size(size), m_adjList(size, Vertices{}) {}
 
     template <typename N>
     void addEdge(N&& a, N&& b) {
@@ -24,58 +24,58 @@ public:
         m_adjList[a].emplace_back(b);
     }
 
-    AdjacancyList& getAdjacancyList() { return m_adjList; }
+    AdjList& getAdjacancyList() { return m_adjList; }
 
     template <typename F>
-    void DFS(F&& f) {
-        std::vector<bool> visited(m_nodes, false);
-        std::stack<T>     st;
-        st.emplace(0);
+    void DFS(Vertex source, F&& f) {
+        std::vector<bool>  visited(m_size, false);
+        std::stack<Vertex> st;
+        st.emplace(source);
 
         while (!st.empty()) {
-            T node = st.top();
+            Vertex vertex = st.top();
             st.pop();
 
-            if (!visited[node]) {
-                visited[node] = true;
-                f(node);
+            if (!visited[vertex]) {
+                visited[vertex] = true;
+                f(vertex);
             }
 
-            for (auto& n : m_adjList[node]) {
-                if (visited[n] == false) {
-                    st.emplace(n);
+            for (auto& v : m_adjList[vertex]) {
+                if (visited[v] == false) {
+                    st.emplace(v);
                 }
             }
         }
     }
 
     template <typename F>
-    void BFS(T source, F&& f) {
-        std::vector<bool> visited(m_nodes, false);
-        std::queue<T>     Q;
+    void BFS(Vertex source, F&& f) {
+        std::vector<bool>  visited(m_size, false);
+        std::queue<Vertex> Q;
         Q.emplace(source);
 
         while (!Q.empty()) {
-            T node = Q.front();
+            Vertex vertex = Q.front();
             Q.pop();
 
-            if (!visited[node]) {
-                visited[node] = true;
-                f(node);
+            if (!visited[vertex]) {
+                visited[vertex] = true;
+                f(vertex);
             }
 
-            for (auto& n : m_adjList[node]) {
-                if (visited[n] == false) {
-                    Q.emplace(n);
+            for (auto& v : m_adjList[vertex]) {
+                if (visited[v] == false) {
+                    Q.emplace(v);
                 }
             }
         }
     }
 
-    bool isPathExists(T source, T destination) {
+    bool isPathExists(Vertex source, Vertex destination) {
         bool result;
-        BFS(source, [&result, destination](int node) {
-            if (node == destination) {
+        BFS(source, [&result, destination](const Vertex& vertex) {
+            if (vertex == destination) {
                 result = true;
             }
         });
@@ -83,8 +83,8 @@ public:
     }
 
 private:
-    std::size_t   m_nodes;
-    AdjacancyList m_adjList;
+    std::size_t m_size;
+    AdjList     m_adjList;
 };
 
 #endif

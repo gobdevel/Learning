@@ -1,3 +1,226 @@
+#include "DirectedGraph.h"
+#include "DisjointSet.h"
+#include "Graph.h"
+#include "KruskalSpanningTree.h"
+#include "PrimsSpanningTree.h"
+#include "UndirectedGraph.h"
+#include "gtest/gtest.h"
+
+/**
+  0 => 3 , 4
+  1 => 2
+  2 => 3
+*/
+TEST(DisjointSet, Basic) {
+    DisjointSet set(5);
+    EXPECT_EQ(set.getSetCounts(), 5);
+    EXPECT_FALSE(set.isConnected(0, 3));
+    EXPECT_EQ(set.find(4), 4);
+
+    set.setUnion(0, 3);
+    set.setUnion(0, 4);
+    set.setUnion(1, 2);
+    set.setUnion(2, 3);
+    EXPECT_TRUE(set.isConnected(0, 3));
+    EXPECT_TRUE(set.isConnected(0, 1));
+    EXPECT_EQ(set.getSetCounts(), 1);
+}
+
+decltype(auto) getSampleUndirectedGraph() {
+    UndirectedGraph<int> g(5);
+    g.addEdge(0, 1);
+    g.addEdge(0, 2);
+    g.addEdge(1, 0);
+    g.addEdge(1, 2);
+    g.addEdge(1, 4);
+    g.addEdge(1, 3);
+    g.addEdge(2, 3);
+    g.addEdge(3, 2);
+    g.addEdge(3, 4);
+    g.addEdge(4, 3);
+    g.addEdge(4, 1);
+    return g;
+}
+
+TEST(UnDirectedGraph, BFS) {
+    auto g = getSampleUndirectedGraph();
+
+    Vertices<int> results, answer{0, 1, 2, 3, 4};
+    g.BFS(0, [&results](auto& vertex) { results.emplace_back(vertex); });
+    EXPECT_EQ(results.size(), 5);
+    std::sort(results.begin(), results.end());
+    EXPECT_EQ(results, answer);
+
+    EXPECT_TRUE(g.isPathExists(0, 3));
+    EXPECT_FALSE(g.isPathExists(0, 32));
+}
+
+TEST(UnDirectedGraph, DFS) {
+    auto g = getSampleUndirectedGraph();
+
+    Vertices<int> results, answer{0, 1, 2, 3, 4};
+    g.DFS(0, [&results](auto& vertex) { results.emplace_back(vertex); });
+    EXPECT_EQ(results.size(), 5);
+    std::sort(results.begin(), results.end());
+    EXPECT_EQ(results, answer);
+}
+
+decltype(auto) getSampleDirectedGraph() {
+    DirectedGraph<int> g(5);
+    g.addEdge(0, 1);
+    g.addEdge(0, 2);
+    g.addEdge(1, 2);
+    g.addEdge(1, 4);
+    g.addEdge(1, 3);
+    g.addEdge(2, 3);
+    g.addEdge(3, 4);
+    return g;
+}
+
+decltype(auto) getSampleDirectedCycleGraph() {
+    DirectedGraph<int> g(5);
+    g.addEdge(0, 1);
+    g.addEdge(0, 2);
+    g.addEdge(1, 2);
+    g.addEdge(1, 4);
+    g.addEdge(1, 3);
+    g.addEdge(2, 3);
+    g.addEdge(2, 0);
+    g.addEdge(3, 4);
+    return g;
+}
+
+TEST(DirectedGraph, BFS) {
+    auto g = getSampleDirectedGraph();
+
+    Vertices<int> results, answer{0, 1, 2, 3, 4};
+    g.BFS(0, [&results](auto& vertex) {
+        results.emplace_back(vertex);
+        return true;
+    });
+    EXPECT_EQ(results.size(), 5);
+    std::sort(results.begin(), results.end());
+    EXPECT_EQ(results, answer);
+
+    EXPECT_TRUE(g.isPathExists(0, 3));
+    EXPECT_FALSE(g.isPathExists(0, 32));
+}
+
+TEST(DirectedGraph, DFS) {
+    auto g = getSampleDirectedGraph();
+
+    Vertices<int> results, answer{0, 1, 2, 3, 4};
+    g.DFS(0, [&results](auto& vertex) {
+        results.emplace_back(vertex);
+        return true;
+    });
+    EXPECT_EQ(results.size(), 5);
+    std::sort(results.begin(), results.end());
+    EXPECT_EQ(results, answer);
+}
+
+TEST(DirectedGraph, BFS_Cycle) {
+    auto g = getSampleDirectedCycleGraph();
+
+    Vertices<int> results, answer{0, 1, 2, 3, 4};
+    g.BFS(0, [&results](auto& vertex) {
+        results.emplace_back(vertex);
+        return true;
+    });
+    EXPECT_EQ(results.size(), 5);
+    std::sort(results.begin(), results.end());
+    EXPECT_EQ(results, answer);
+
+    EXPECT_TRUE(g.isPathExists(0, 3));
+    EXPECT_FALSE(g.isPathExists(0, 32));
+}
+
+TEST(DirectedGraph, DFS_Cycle) {
+    auto g = getSampleDirectedCycleGraph();
+
+    Vertices<int> results, answer{0, 1, 2, 3, 4};
+    g.DFS(0, [&results](auto& vertex) {
+        results.emplace_back(vertex);
+        return true;
+    });
+    EXPECT_EQ(results.size(), 5);
+    std::sort(results.begin(), results.end());
+    EXPECT_EQ(results, answer);
+}
+
+TEST(DirectedGraph, BFS_All_Path) {
+    auto g      = getSampleDirectedGraph();
+    using Path  = Path<int>;
+    using Paths = Paths<int>;
+
+    Paths results, answer;
+
+    answer.emplace_back(Path{0, 1, 4});
+    answer.emplace_back(Path{0, 1, 3, 4});
+    answer.emplace_back(Path{0, 1, 2, 3, 4});
+    answer.emplace_back(Path{0, 2, 3, 4});
+
+    results = g.getAllPaths(0, 4);
+
+    /**
+      for (auto& res : results) {
+          for (auto& r : res) {
+              std::cout << r << "=>";
+          }
+          std::cout << "\n";
+      }
+      */
+    EXPECT_EQ(results.size(), answer.size());
+}
+
+AdjacancyMatrix<int> getSampleUndirectedWeightedGraph() {
+    AdjacancyMatrixBuilder<int> g(5);
+    g.addEdge(0, 1, 4);
+    g.addEdge(0, 2, 3);
+    g.addEdge(1, 0, 4);
+    g.addEdge(1, 2, 2);
+    g.addEdge(1, 4, 9);
+    g.addEdge(1, 3, 5);
+    g.addEdge(2, 3, 1);
+    g.addEdge(2, 1, 2);
+    g.addEdge(3, 2, 1);
+    g.addEdge(3, 4, 2);
+    g.addEdge(4, 3, 2);
+    g.addEdge(4, 1, 9);
+    return g.getAdjacancymatrix();
+}
+
+TEST(MST, Kruskal) {
+    auto g = getSampleUndirectedWeightedGraph();
+
+    KruskalMst<int> k;
+
+    auto edges = k.getMst(g);
+    EXPECT_EQ(edges.size(), 4);
+
+    auto sum = 0;
+    for (auto& e : edges) {
+        sum += e.weight;
+    }
+    EXPECT_EQ(sum, 8);
+}
+
+TEST(MST, Prims) {
+    auto g = getSampleUndirectedWeightedGraph();
+
+    PrimsMst<int> p;
+
+    auto edges = p.getMst(g);
+    EXPECT_EQ(edges.size(), 4);
+
+    auto sum = 0;
+    for (auto& e : edges) {
+        sum += e.weight;
+    }
+    EXPECT_EQ(sum, 8);
+}
+
+#if 0
 #include <iostream>
 
 #include "Graph.h"
@@ -180,3 +403,4 @@ int main() {
     testPrimsMst();
 }
 */
+#endif

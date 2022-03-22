@@ -37,10 +37,10 @@ template <typename T>
 using Paths = std::vector<Path<T>>;
 
 template <typename T>
-using AdjacancyList = std::vector<std::vector<Vertex<T>>>;
+using AdjacancyList = std::vector<Vertices<T>>;
 
 template <typename T>
-using AdjacancyMatrix = std::vector<std::vector<Vertex<T>>>;
+using AdjacancyMatrix = std::vector<Vertices<T>>;
 
 /**
  * Class Adjacancy Builder to build an Adjacancy List

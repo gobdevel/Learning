@@ -18,40 +18,46 @@
 template <typename T = int>
 class PrimsMst {
 public:
-    PrimsMst() = default;
+    PrimsMst()      = default;
+    using Edge      = Edge<T>;
+    using Edges     = Edges<T>;
+    using AdjMatrix = AdjacancyMatrix<T>;
 
-    Edges<T> getMst(AdjacancyMatrix<T>& adjMatrix) {
-        Edges<T>          results;
+    Edges getMst(AdjMatrix& adjMatrix) {
+        Edges results;
+
         std::vector<bool> visited(adjMatrix.size(), false);
 
-        // Min heap to store not-visited edges.
-        std::priority_queue<Edge<T>> notVisited;
-
-        // Select any first node and add its all edges to min heap
+        std::priority_queue<Edge> minHeap;
+        // Select any one vertex and add all its edges to minHeap
         for (int i = 0; i < adjMatrix[0].size(); ++i) {
             if (adjMatrix[0][i] != 0) {
-                notVisited.emplace(0, i, adjMatrix[0][i]);
+                minHeap.emplace(0, i, adjMatrix[0][i]);
             }
         }
+        // Mark 0 as visited vertex
         visited[0] = true;
-        int count  = adjMatrix.size() - 1;
 
-        while (!notVisited.empty() && count > 0) {
-            auto edge = std::move(notVisited.top());
-            notVisited.pop();
+        // Max MST is max vertex - 1;
+        int count = adjMatrix.size() - 1;
 
-            if (visited[edge.dst] == false) {
+        while (!minHeap.empty() && count > 0) {
+            auto edge = std::move(minHeap.top());
+            minHeap.pop();
+
+            if (!visited[edge.dst]) {
                 visited[edge.dst] = true;
-                // Add all edges of this selected vertex
-                for (int i = 0; i < adjMatrix[edge.dst].size(); ++i) {
-                    if (adjMatrix[edge.dst][i] != 0) {
-                        notVisited.emplace(edge.dst, i, adjMatrix[edge.dst][i]);
+                // Add all its edges to minHeap;
+                for (int j = 0; j < adjMatrix[edge.dst].size(); ++j) {
+                    if (adjMatrix[edge.dst][j] != 0) {
+                        minHeap.emplace(edge.dst, j, adjMatrix[edge.dst][j]);
                     }
                 }
                 results.emplace_back(std::move(edge));
                 --count;
             }
         }
+
         return results;
     }
 };

@@ -2,7 +2,7 @@ set(BINARY ${PROJECT_NAME}_tests)
 
 file(GLOB_RECURSE TEST_SOURCES LIST_DIRECTORIES false *.h *.cpp *.cc)
 
-set(SOURCES ${TEST_SOURCES})
+#set(SOURCES ${TEST_SOURCES})
 
 add_executable(${BINARY} ${TEST_SOURCES})
 
