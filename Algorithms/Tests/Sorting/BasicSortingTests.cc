@@ -1,157 +1,179 @@
 #include "BasicSorting.h"
 #include "gtest/gtest.h"
+#include "utils.h"
 
+using Container = std::vector<int>;
+
+Container getBasic() {
+    Container data{4, 3, 2};
+    return data;
+}
+
+Container getEmpty() {
+    Container data;
+    return data;
+}
+
+Container getSingle() {
+    Container data{1};
+    return data;
+}
+
+Container getDouble() {
+    Container data{2, 1};
+    return data;
+}
+
+Container getLarge() { return getSampleData<int>(10000); }
+
+// SELECTION SORT
 TEST(SelectionSort, Basic) {
-    std::vector<int> data{4, 3, 2}, answer{2, 3, 4};
+    auto data = getBasic();
     SelectionSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(SelectionSort, Empty) {
-    std::vector<int> data{}, answer{};
+    auto data = getEmpty();
     SelectionSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(SelectionSort, Single) {
-    std::vector<int> data{1}, answer{1};
+    auto data = getSingle();
     SelectionSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(SelectionSort, Double) {
-    std::vector<int> data{2, 1}, answer{1, 2};
+    auto data = getDouble();
     SelectionSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(SelectionSort, Large) {
-    std::vector<int> data{2, 1, 10, 8, 4, 9, 7, 6, 3, 5},
-        answer{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    auto data = getLarge();
     SelectionSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
+// BUBBLE SORT
 TEST(BubbleSort, Basic) {
-    std::vector<int> data{4, 3, 2}, answer{2, 3, 4};
+    auto data = getBasic();
     BubbleSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(BubbleSort, Empty) {
-    std::vector<int> data{}, answer{};
+    auto data = getEmpty();
     BubbleSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(BubbleSort, Single) {
-    std::vector<int> data{1}, answer{1};
+    auto data = getSingle();
     BubbleSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(BubbleSort, Double) {
-    std::vector<int> data{2, 1}, answer{1, 2};
+    auto data = getDouble();
     BubbleSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(BubbleSort, Large) {
-    std::vector<int> data{2, 1, 10, 8, 4, 9, 7, 6, 3, 5},
-        answer{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    auto data = getLarge();
     BubbleSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(InsertionSort, Basic) {
     std::vector<int> data{4, 3, 2}, answer{2, 3, 4};
     InsertionSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(InsertionSort, Empty) {
-    std::vector<int> data{}, answer{};
+    auto data = getEmpty();
     InsertionSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(InsertionSort, Single) {
-    std::vector<int> data{1}, answer{1};
+    auto data = getSingle();
     InsertionSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(InsertionSort, Double) {
-    std::vector<int> data{2, 1}, answer{1, 2};
+    auto data = getDouble();
     InsertionSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(InsertionSort, Large) {
-    std::vector<int> data{2, 1, 10, 8, 4, 9, 7, 6, 3, 5},
-        answer{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    auto data = getLarge();
     InsertionSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(QuickSort, Basic) {
     std::vector<int> data{4, 3, 2}, answer{2, 3, 4};
     QuickSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(QuickSort, Empty) {
-    std::vector<int> data{}, answer{};
+    auto data = getEmpty();
     QuickSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(QuickSort, Single) {
-    std::vector<int> data{1}, answer{1};
+    auto data = getSingle();
     QuickSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(QuickSort, Double) {
-    std::vector<int> data{2, 1}, answer{1, 2};
+    auto data = getDouble();
     QuickSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(QuickSort, Large) {
-    std::vector<int> data{2, 1, 10, 8, 4, 9, 7, 6, 3, 5},
-        answer{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    auto data = getLarge();
     QuickSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(MergeSort, Basic) {
     std::vector<int> data{4, 3, 2}, answer{2, 3, 4};
     MergeSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(MergeSort, Empty) {
-    std::vector<int> data{}, answer{};
+    auto data = getEmpty();
     MergeSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(MergeSort, Single) {
-    std::vector<int> data{1}, answer{1};
+    auto data = getSingle();
     MergeSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(MergeSort, Double) {
-    std::vector<int> data{2, 1}, answer{1, 2};
+    auto data = getDouble();
     MergeSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }
 
 TEST(MergeSort, Large) {
-    std::vector<int> data{2, 1, 10, 8, 4, 9, 7, 6, 3, 5},
-        answer{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    auto data = getLarge();
     MergeSort(data.begin(), data.end());
-    EXPECT_EQ(data, answer);
+    EXPECT_TRUE(std::is_sorted(data.begin(), data.end()));
 }

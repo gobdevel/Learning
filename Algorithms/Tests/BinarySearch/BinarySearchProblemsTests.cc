@@ -20,6 +20,12 @@ TEST(BinarySearchProblem, LeftElement) {
     EXPECT_EQ(BinarySearchLeftElement(empty, 40), -1);
 }
 
+TEST(BinarySearchProblem, SingleLeftElement) {
+    Container nums{1};
+    EXPECT_EQ(BinarySearchLeftElement(nums, 1), 0);
+    EXPECT_EQ(BinarySearchLeftElement(nums, 0), -1);
+}
+
 TEST(BinarySearchProblem, RightElement) {
     Container empty;
     Container nums{2, 2, 2, 3,  5,  5,  5,  5,  5, 5,
@@ -33,6 +39,12 @@ TEST(BinarySearchProblem, RightElement) {
     EXPECT_EQ(BinarySearchRightElement(nums, 1), -1);
     EXPECT_EQ(BinarySearchRightElement(nums, 40), -1);
     EXPECT_EQ(BinarySearchRightElement(empty, 40), -1);
+}
+
+TEST(BinarySearchProblem, SingleRightElement) {
+    Container nums{1};
+    EXPECT_EQ(BinarySearchRightElement(nums, 1), 0);
+    EXPECT_EQ(BinarySearchRightElement(nums, 0), -1);
 }
 
 TEST(BinarySearchProblem, SortedMatrix) {

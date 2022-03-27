@@ -18,39 +18,6 @@ Node* BinaryTree::insert(Node* node, int value) {
     return node;
 }
 
-// Pre Order
-void BinaryTree::preOrder() { preOrder(m_root); }
-
-void BinaryTree::preOrder(Node* node) {
-    if (node) {
-        std::cout << node->value << ", ";
-        preOrder(node->left);
-        preOrder(node->right);
-    }
-}
-
-// In Order
-void BinaryTree::inOrder() { inOrder(m_root); }
-
-void BinaryTree::inOrder(Node* node) {
-    if (node) {
-        inOrder(node->left);
-        std::cout << node->value << ", ";
-        inOrder(node->right);
-    }
-}
-
-// Post Order
-void BinaryTree::postOrder() { postOrder(m_root); }
-
-void BinaryTree::postOrder(Node* node) {
-    if (node) {
-        postOrder(node->left);
-        postOrder(node->right);
-        std::cout << node->value << ", ";
-    }
-}
-
 int BinaryTree::getHeight() { return getHeight(m_root); }
 
 int BinaryTree::getHeight(Node* node) {
