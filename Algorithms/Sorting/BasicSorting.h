@@ -35,18 +35,18 @@ void InsertionSort(BidirectionalIterator start, BidirectionalIterator end) {
     }
 }
 
-static int partition(std::vector<int>& nums, int start, int end) {
-    if (end - start > 1) {
-        int pivot = nums[end], part = 0;
-        for (int i = 0; i < end; ++i) {
-            if (nums[i] < pivot) {
-                std::swap(nums[i], nums[part++]);
-            }
+template <typename ForwardIterator, typename Predicate>
+ForwardIterator myPartition(ForwardIterator start, ForwardIterator end,
+                            Predicate P) {
+    start = std::find_if_not(start, end, P);
+    if (start == end) return start;
+    for (auto i = std::next(start); i != end; ++i) {
+        if (P(*i)) {
+            std::iter_swap(start, i);
+            ++start;
         }
-        std::swap(nums[part], nums[end]);
-        return part;
     }
-    return 0;
+    return start;
 }
 
 template <typename ForwardIterator>
@@ -87,12 +87,12 @@ void MergeSort(ForwardIterator start, ForwardIterator end) {
 
 template <typename ForwardIterator>
 void QuickSort(ForwardIterator start, ForwardIterator end) {
-    if (start < end) {
+    if (start != end) {
         auto pivot = *std::next(start, std::distance(start, end) / 2);
-        auto mid1  = std::partition(start, end, [&pivot](const auto& entry) {
+        auto mid1  = myPartition(start, end, [&pivot](const auto& entry) {
             return (entry < pivot);
          });
-        auto mid2  = std::partition(mid1, end, [&pivot](const auto& entry) {
+        auto mid2  = myPartition(mid1, end, [&pivot](const auto& entry) {
             return !(pivot < entry);
          });
         QuickSort(start, mid1);
