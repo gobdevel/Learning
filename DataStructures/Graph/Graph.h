@@ -46,7 +46,7 @@ using AdjacancyMatrix = std::vector<Vertices<T>>;
  * Class Adjacancy Builder to build an Adjacancy List
  */
 
-template <typename T>
+template <typename T = int>
 class AdjacancyListBuilder {
 public:
     explicit AdjacancyListBuilder(std::size_t maxVertices)
@@ -68,7 +68,7 @@ private:
  * Class Adjacancy Builder to build an Adjacancy List
  */
 
-template <typename T>
+template <typename T = int>
 class AdjacancyMatrixBuilder {
 public:
     explicit AdjacancyMatrixBuilder(std::size_t maxVertices)

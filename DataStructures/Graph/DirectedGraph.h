@@ -50,6 +50,30 @@ public:
     }
 
     template <typename F>
+    void DFS_Recursion(Vertex source, F&& f) {
+        std::vector<bool> visited(m_size, false);
+        DFS_Recursion_Impl(source, visited, f);
+    }
+
+    template <typename F>
+    bool DFS_Recursion_Impl(Vertex vertex, std::vector<bool>& visited, F&& f) {
+        if (!visited[vertex]) {
+            visited[vertex] = true;
+            if (f(vertex) == false) {
+                return false;
+            }
+            for (auto& v : m_adjList[vertex]) {
+                if (!visited[v]) {
+                    if (!DFS_Recursion_Impl(v, visited, f)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    template <typename F>
     void BFS(Vertex source, F&& f) {
         std::queue<Vertex> q;
         std::vector<bool>  visited(m_size, false);
@@ -112,7 +136,37 @@ public:
         return result;
     }
 
+    bool isCyclic() {
+        std::vector<bool> visited(m_size, false);
+        std::vector<bool> dfsVisited(m_size, false);
+        for (int i = 0; i < m_adjList.size(); ++i) {
+            if (visited[i] == false) {
+                if (isCyclicDfs(i, visited, dfsVisited)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 private:
+    bool isCyclicDfs(Vertex vertex, std::vector<bool>& visited,
+                     std::vector<bool>& dfsVisited) {
+        visited[vertex]    = true;
+        dfsVisited[vertex] = true;
+
+        for (auto& v : m_adjList[vertex]) {
+            if (visited[v] == false) {
+                if (isCyclicDfs(v, visited, dfsVisited)) {
+                    return true;
+                }
+            } else if (dfsVisited[v] == true) {
+                return true;
+            }
+        }
+        dfsVisited[vertex] = false;
+        return false;
+    }
     std::size_t m_size;
     AdjList     m_adjList;
 };

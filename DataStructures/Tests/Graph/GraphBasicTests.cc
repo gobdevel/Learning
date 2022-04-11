@@ -119,6 +119,19 @@ TEST(DirectedGraph, DFS) {
     EXPECT_EQ(results, answer);
 }
 
+TEST(DirectedGraph, DFS_Recursion) {
+    auto g = getSampleDirectedGraph();
+
+    Vertices<int> results, answer{0, 1, 2, 3, 4};
+    g.DFS_Recursion(0, [&results](auto& vertex) {
+        results.emplace_back(vertex);
+        return true;
+    });
+    EXPECT_EQ(results.size(), 5);
+    std::sort(results.begin(), results.end());
+    EXPECT_EQ(results, answer);
+}
+
 TEST(DirectedGraph, BFS_Cycle) {
     auto g = getSampleDirectedCycleGraph();
 
@@ -146,6 +159,14 @@ TEST(DirectedGraph, DFS_Cycle) {
     EXPECT_EQ(results.size(), 5);
     std::sort(results.begin(), results.end());
     EXPECT_EQ(results, answer);
+}
+
+TEST(DirectedGraph, CycleTest) {
+    auto g = getSampleDirectedCycleGraph();
+    EXPECT_TRUE(g.isCyclic());
+
+    auto noCycle = getSampleDirectedGraph();
+    EXPECT_FALSE(noCycle.isCyclic());
 }
 
 TEST(DirectedGraph, BFS_All_Path) {
