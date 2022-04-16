@@ -12,4 +12,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_subdirectory(DataStructures)
 add_subdirectory(Algorithms)
+add_subdirectory(DesignPatterns)
 add_subdirectory(Libs/googletest)
