@@ -7,9 +7,11 @@ project(DesignPatterns VERSION 1.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-file(GLOB_RECURSE SOURCES Creational/Singleton/*.cc Behavioral/State/*.cc)
+file(GLOB_RECURSE SOURCES *[!Tests]/*.cc)
+file(GLOB INC LIST_DIRECTORIES true *[!Tests]/*)
+
 set(SOURCES ${SOURCES})
 
 add_library(design-patterns STATIC ${SOURCES})
-target_include_directories(design-patterns PUBLIC Creational/Singleton Behavioral/State)
+target_include_directories(design-patterns PUBLIC ${INC})
 add_subdirectory(Tests)

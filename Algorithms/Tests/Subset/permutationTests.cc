@@ -17,3 +17,11 @@ TEST(Permutation, Basic) {
     std::sort(ret.begin(), ret.end());
     EXPECT_EQ(ret, answer);
 }
+
+TEST(Permutation, StringCase) {
+    std::string  str{"ab7c"};
+    StringResult answer{{"ab7c"}, {"Ab7c"}, {"aB7c"}, {"AB7c"},
+                        {"ab7C"}, {"Ab7C"}, {"aB7C"}, {"AB7C"}};
+    auto         ret = getStringCasePermutation(str);
+    EXPECT_EQ(answer, ret);
+}

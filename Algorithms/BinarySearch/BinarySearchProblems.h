@@ -13,16 +13,19 @@ using Matrix = std::vector<std::vector<int>>;
 inline int BinarySearchLeftElement(std::vector<int>& nums, int target) {
     int size = nums.size(), start = 0, end = size - 1;
     if (size == 0) return -1;
-
+    int keyIndex = -1;
     while (start <= end) {
         auto mid = start + (end - start) / 2;
-        if (nums[mid] >= target) {
+        if (nums[mid] > target) {
             end = mid - 1;
-        } else {
+        } else if (nums[mid] < target) {
             start = mid + 1;
+        } else {
+            keyIndex = mid;
+            end      = mid - 1;
         }
     }
-    return (nums[start] == target ? start : -1);
+    return keyIndex;
 }
 
 /**
@@ -32,16 +35,46 @@ inline int BinarySearchLeftElement(std::vector<int>& nums, int target) {
 inline int BinarySearchRightElement(std::vector<int>& nums, int target) {
     int size = nums.size(), start = 0, end = size - 1;
     if (size == 0) return -1;
-
+    int keyIndex = -1;
     while (start <= end) {
         auto mid = start + (end - start) / 2;
-        if (nums[mid] <= target) {
+        if (nums[mid] > target) {
+            end = mid - 1;
+        } else if (nums[mid] < target) {
             start = mid + 1;
         } else {
-            end = mid - 1;
+            keyIndex = mid;
+            start    = mid + 1;
         }
     }
-    return (nums[end] == target ? end : -1);
+    return keyIndex;
+}
+
+/*
+Problem : Find first and last index of a number in sorted array
+*/
+
+inline int BinarySearchRightOrLeftElement(std::vector<int>& nums, int target,
+                                          bool isLeft) {
+    int size = nums.size(), start = 0, end = size - 1;
+    if (size == 0) return -1;
+    int keyIndex = -1;
+    while (start <= end) {
+        auto mid = start + (end - start) / 2;
+        if (nums[mid] > target) {
+            end = mid - 1;
+        } else if (nums[mid] < target) {
+            start = mid + 1;
+        } else {
+            keyIndex = mid;
+            if (isLeft) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+    }
+    return keyIndex;
 }
 
 /*
@@ -100,29 +133,3 @@ inline bool searchInSortedRowSortedColMatrix(Matrix& matrix, int target) {
 }
 
 #endif
-
-/**
-int main() {
-    std::vector<int> nums{1, 1, 2, 6, 6, 6, 7, 9, 12, 24, 25, 25};
-
-    Matrix matrix = {
-        {4, 5, 6, 7, 8, 9}, {10, 11, 12, 13, 14, 15}, {16, 17, 18, 19, 20, 21}};
-
-    Matrix matrix2 = {{1, 4, 7, 11, 15},
-                      {2, 5, 8, 12, 19},
-                      {3, 6, 9, 16, 22},
-                      {10, 13, 14, 17, 24},
-                      {18, 21, 23, 26, 30}};
-
-    std::cout << "Matrix Search 5 : " << searchInSortedMatrix(matrix, 5)
-              << "\n";
-    std::cout << "Matrix Search 2 : " << searchInSortedMatrix(matrix, 2)
-              << "\n";
-
-    std::cout << "Matrix Search 5 : "
-              << searchInSortedRowSortedColMatrix(matrix2, 5) << "\n";
-    std::cout << "Matrix Search 26 : "
-              << searchInSortedRowSortedColMatrix(matrix2, 26) << "\n";
-    return 0;
-}
-*/
