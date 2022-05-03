@@ -3,7 +3,7 @@
 CUR_DIR=`pwd`
 REMOTE_DIR='/root/build'
 DOCKER_IMAGE='gobdevel/alpine-cpp-dev'
-DOCEKER_RUN="docker container run --rm  -v ${CUR_DIR}:${REMOTE_DIR}  -w=${REMOTE_DIR} ${DOCKER_IMAGE} "
+DOCEKER_RUN="podman container run --rm  -v ${CUR_DIR}:${REMOTE_DIR}:Z  -w ${REMOTE_DIR} ${DOCKER_IMAGE} "
 
 if [ $# -lt 1 ]; then
     echo "Invalid Arguments !!! Usage : $0 -b | -c "

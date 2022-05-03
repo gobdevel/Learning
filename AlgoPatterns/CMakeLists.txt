@@ -1,7 +1,7 @@
 #cmake_minimum_required(VERSION 3.16)
 
 # Project Name
-project(DesignPatterns VERSION 1.0)
+project(AlgoPatterns VERSION 1.0)
 
 # specify the C++ standard
 set(CMAKE_CXX_STANDARD 17)

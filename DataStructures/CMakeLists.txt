@@ -1,15 +1,22 @@
-cmake_minimum_required(VERSION 3.16)
+#cmake_minimum_required(VERSION 3.16)
 
 # Project Name
-project(DataStructre VERSION 1.0)
+project(DataStructures VERSION 1.0)
 
 # specify the C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-file(GLOB_RECURSE SOURCES Cache/*.cc Graph/*.cc HashMap/*.cc Tree/*.cc LinkList/*.cc Heap/*.cc)
-set(SOURCES ${SOURCES})
+file(GLOB_RECURSE SOURCES LIST_DIRECTORIES true *.cc *.h)
+list(FILTER SOURCES EXCLUDE REGEX ".*Tests.*$")
+set(INC ${SOURCES})
 
-add_library(data-structure STATIC ${SOURCES})
-target_include_directories(data-structure PUBLIC Cache Graph HashMap Tree LinkList Heap)
+list(FILTER SOURCES EXCLUDE REGEX ".*\.h$")
+#message(STATUS "SOURCES : ${SOURCES}")
+
+list(FILTER INC EXCLUDE REGEX ".*\\.(cc|h)$")
+#message(STATUS "INC : ${INC}")
+
+add_library(${PROJECT_NAME} STATIC ${SOURCES})
+target_include_directories(${PROJECT_NAME} PUBLIC ${INC} "${CMAKE_SOURCE_DIR}/Libs/tools/inc")
 add_subdirectory(Tests)

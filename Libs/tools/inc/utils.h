@@ -6,6 +6,9 @@
 #include <type_traits>
 #include <vector>
 
+using Num  = int;
+using Nums = std::vector<Num>;
+
 template <typename T>
 using remove_cv_ref_t = typename std::remove_cv_t<std::remove_reference_t<T>>;
 

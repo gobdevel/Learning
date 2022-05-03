@@ -1,6 +1,6 @@
 **To build Alpine compiler docker image -**
 ```bash
-docker build -t gob/alpine-cpp-dev .
+docker build -t gobdevel/alpine-cpp-dev .
 ```
 
 **Note** : -t is for tag
