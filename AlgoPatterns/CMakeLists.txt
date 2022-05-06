@@ -18,5 +18,6 @@ list(FILTER INC EXCLUDE REGEX ".*\\.(cc|h)$")
 #message(STATUS "INC : ${INC}")
 
 add_library(${PROJECT_NAME} STATIC ${SOURCES})
+target_link_libraries(${PROJECT_NAME} PUBLIC DataStructures)
 target_include_directories(${PROJECT_NAME} PUBLIC ${INC} "${CMAKE_SOURCE_DIR}/Libs/tools/inc")
 add_subdirectory(Tests)

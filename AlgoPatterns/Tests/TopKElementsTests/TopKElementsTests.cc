@@ -15,3 +15,18 @@ TEST(KthSmallestElements, Basic) {
     auto ret = findKthSmallestNumbers(nums, 3);
     EXPECT_EQ(ret, 5);
 }
+
+TEST(ClosetPoint, Basic) {
+    Points points{
+        {1, 3 },
+        {3, 4 },
+        {2, -1}
+    };
+    Points expected{
+        {1, 3 },
+        {2, -1}
+    };
+
+    auto ret = findKClosetPointToOrigin(points, 2);
+    EXPECT_EQ(ret, expected);
+}

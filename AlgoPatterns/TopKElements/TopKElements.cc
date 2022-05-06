@@ -37,3 +37,24 @@ Num findKthSmallestNumbers(const Nums& nums, Num k) {
     }
     return maxHeap.front();
 }
+
+/*
+ *  Euclidean distance (x, y) = sqrt(x^2, y^2);
+ */
+Points findKClosetPointToOrigin(const Points& points, Num k) {
+    auto distanceToZero = [](const Point& p) {
+        return ((p.x * p.x) + (p.y * p.y));
+    };
+
+    std::vector<Point> maxHeap(std::begin(points), std::begin(points) + k);
+    std::make_heap(std::begin(maxHeap), std::end(maxHeap));
+    for (int i = k; i < points.size(); ++i) {
+        if (distanceToZero(points[i]) < distanceToZero(maxHeap.front())) {
+            std::pop_heap(maxHeap.begin(), maxHeap.end());
+            maxHeap.pop_back();
+            maxHeap.push_back(points[i]);
+            std::push_heap(maxHeap.begin(), maxHeap.end());
+        }
+    }
+    return maxHeap;
+}

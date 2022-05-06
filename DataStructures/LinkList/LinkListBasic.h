@@ -17,6 +17,17 @@ struct Node {
     Node *next;
 };
 
+// Utility to convert LinkList to vector
+template <typename T>
+std::vector<T> convertLinkListToVector(Node<T> *root) {
+    std::vector<T> res;
+    while (root) {
+        res.emplace_back(root->val);
+        root = root->next;
+    }
+    return res;
+}
+
 template <typename T>
 class LinkList {
 public:
