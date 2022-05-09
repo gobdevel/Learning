@@ -6,9 +6,12 @@
 #include <type_traits>
 #include <vector>
 
-using Num      = int;
-using Nums     = std::vector<Num>;
-using ListNums = std::vector<Nums>;
+using Num       = int;
+using Nums      = std::vector<Num>;
+using ListNums  = std::vector<Nums>;
+using NumRange  = std::pair<Num, Num>;
+using NumMatrix = ListNums;
+using FloatNums = std::vector<float>;
 
 template <typename T>
 using remove_cv_ref_t = typename std::remove_cv_t<std::remove_reference_t<T>>;
