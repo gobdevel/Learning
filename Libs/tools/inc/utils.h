@@ -10,6 +10,7 @@ using Num       = int;
 using Nums      = std::vector<Num>;
 using ListNums  = std::vector<Nums>;
 using NumRange  = std::pair<Num, Num>;
+using NumPair   = std::pair<Num, Num>;
 using NumMatrix = ListNums;
 using FloatNums = std::vector<float>;
 
