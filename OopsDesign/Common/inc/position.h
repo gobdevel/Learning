@@ -1,10 +1,8 @@
-#ifndef __LOCATION_H__
-#define __LOCATION_H__
+#pragma once
 
-class Location {
+class Position {
 public:
-    Location() = default;
-    Location(int row, int col) : m_row(row), m_col(col) {}
+    explicit Position(int row, int col) : m_row(row), m_col(col) {}
 
     void setRow(int row) { m_row = row; }
     void setCol(int col) { m_col = col; }
@@ -16,5 +14,3 @@ private:
     int m_row;
     int m_col;
 };
-
-#endif

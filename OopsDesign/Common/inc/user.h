@@ -1,15 +1,17 @@
-#ifndef __USER_H__
-#define __USER_H__
+#pragma once
+
 #include <string>
 
 class User {
 public:
-    User() = default;
-    User(std::uint32_t id) : m_id(id) {}
-    User(std::uint32_t id, std::string name, std::string address)
-        : m_id(id), m_name(std::move(name)), m_address(std::move(address)) {}
+    User() : m_id(++s_id) {}
+    User(std::string name, std::string address)
+        : m_id(++s_id),
+          m_name(std::move(name)),
+          m_address(std::move(address)) {}
 
-    void          setId(std::uint32_t id) { m_id = id; }
+    virtual ~User() {}
+
     std::uint32_t getId() const { return m_id; }
     std::uint32_t getId() { return m_id; }
 
@@ -27,9 +29,11 @@ public:
     }
 
 private:
+    // Static Data Members
+    static std::uint32_t s_id;
+
+    // Class Members
     std::uint32_t m_id;
     std::string   m_name;
     std::string   m_address;
 };
-
-#endif
