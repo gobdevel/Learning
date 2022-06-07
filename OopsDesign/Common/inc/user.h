@@ -20,8 +20,8 @@ public:
         m_name = std::forward<T>(name);
     }
 
-    std::string getName() { return m_name; }
-    std::string getAddress() { return m_address; }
+    std::string getName() const { return m_name; }
+    std::string getAddress() const { return m_address; }
 
     template <typename T>
     void setAddress(T&& address) {

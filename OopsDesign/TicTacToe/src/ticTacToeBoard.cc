@@ -1,7 +1,7 @@
 #include "ticTacToeBoard.h"
 
-TicTacToeBoard::Status TicTacToeBoard::move(Position     position,
-                                            const Piece* piece) {
+TicTacToeBoard::Status TicTacToeBoard::place(Position        position,
+                                             const PiecePtr& piece) {
     auto row = position.getRow();
     auto col = position.getCol();
 

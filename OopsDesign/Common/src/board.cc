@@ -23,7 +23,7 @@ void printBoard(const Board& board) {
 
     for (int i = 0; i < row; ++i) {
         for (int j = 0; j < col; ++j) {
-            auto piece = b[i][j].getPiece();
+            auto piece = b[i][j].getItem();
             std::cout << "[" << (piece ? piece->getName() : " ") << "]";
         }
         std::cout << "\n";

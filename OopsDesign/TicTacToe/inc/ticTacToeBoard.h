@@ -9,7 +9,7 @@ public:
     TicTacToeBoard() : Board(rows, cols) {}
 
     enum class Status { Success, Error, NotEmpty };
-    Status move(Position position, const Piece* piece);
+    Status place(Position position, const PiecePtr& piece);
     int    getNumPlacements() const { return m_numPlacements; }
 
 private:

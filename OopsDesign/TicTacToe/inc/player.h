@@ -25,19 +25,20 @@ private:
 
 class Player : public User {
 public:
-    Player(std::string name, std::string address, const Piece *piece)
-        : User(std::move(name), std::move(address)), m_piece{piece} {}
+    Player(std::string name, std::string address, PiecePtr piece)
+        : User(std::move(name), std::move(address)),
+          m_piece{std::move(piece)} {}
 
     virtual Position nextMove() = 0;
-    const Piece     *getPiece() { return m_piece; }
+    const PiecePtr&  getPiece() const { return m_piece; }
 
 private:
-    const Piece *m_piece;
+    PiecePtr m_piece;
 };
 
 class HumanPlayer : public Player {
 public:
-    HumanPlayer(std::string name, std::string address, const Piece *piece)
+    HumanPlayer(std::string name, std::string address, PiecePtr piece)
         : Player(std::move(name), std::move(address), piece) {}
     Position nextMove() override;
 };
