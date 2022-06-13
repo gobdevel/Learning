@@ -12,4 +12,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_subdirectory(TicTacToe)
 add_subdirectory(Common)
+add_subdirectory(LibraryManagementSystem)
 #add_subdirectory(lib/googletest)
