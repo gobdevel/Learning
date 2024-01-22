@@ -1,11 +1,13 @@
 # Docker Compose file for Ubuntu development machine
+# Usage: Create an external volume named ubuntu-data
+#
 version: '3.8'
 services:
   ubuntu-dev:
     image: 'ubuntu-dev:latest'
     build:
       context: .
-      dockerfile: ubuntu_dev_build.dockerfile
+      dockerfile: Dockerfile
     container_name: ubuntu-dev
     hostname: ubuntu-dev
     restart: unless-stopped

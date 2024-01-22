@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  wiki:
+    container_name: wiki
+    image: requarks/wiki:latest
+    hostname: tekyonix-wiki
+    ports:
+      - 3000:3000
+    environment:
+      DB_TYPE: postgres
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: wikijs_admin
+      DB_PASS: admin@tekyonix
+      DB_NAME: wikijs
+    restart: unless-stopped
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '0.1'
+    #       memory: 256M
+    networks:
+      - test-network
+networks:
+  test-network:
+    external:
+      name: local-test-networks
+

@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    command: ["postgres", "-c", "config_file=/etc/postgresql.conf"]
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin@tekyonix
+    ports:
+      - 5432:5432
+
+    volumes:
+      # - /mnt/disks/data/postgres_db_data:/var/lib/postgresql/data
+      - /Library/A-Gobind/DockerShare/postgres_db_data:/var/lib/postgresql/data
+      - ./configs/postgresql.conf:/etc/postgresql.conf:ro
+      - ./configs/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 128M
+        reservations:
+          memory: 64M
