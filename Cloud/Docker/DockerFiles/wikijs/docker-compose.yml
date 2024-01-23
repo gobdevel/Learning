@@ -11,9 +11,12 @@ services:
       DB_HOST: postgres
       DB_PORT: 5432
       DB_USER: wikijs_admin
-      DB_PASS: admin@tekyonix
+      DB_PASS_FILE: /run/secrets/db_password
       DB_NAME: wikijs
+    secrets:
+      - db_password
     restart: unless-stopped
+
     # deploy:
     #   resources:
     #     limits:
@@ -21,6 +24,11 @@ services:
     #       memory: 256M
     networks:
       - test-network
+
+secrets:
+  db_password:
+    file: db_password.txt
+
 networks:
   test-network:
     external:

@@ -7,9 +7,11 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin@tekyonix
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_root_password
     ports:
       - 5432:5432
+    secrets:
+      - db_root_password
 
     volumes:
       # - /mnt/disks/data/postgres_db_data:/var/lib/postgresql/data
@@ -23,3 +25,14 @@ services:
           memory: 128M
         reservations:
           memory: 64M
+    networks:
+      - test-network
+
+secrets:
+  db_root_password:
+    file: ./configs/db_root_password.txt
+
+networks:
+  test-network:
+    external:
+      name: local-test-networks
