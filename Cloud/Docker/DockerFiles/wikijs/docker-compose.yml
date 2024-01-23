@@ -23,14 +23,13 @@ services:
     #       cpus: '0.1'
     #       memory: 256M
     networks:
-      - test-network
+      - local-test-networks
 
 secrets:
   db_password:
     file: db_password.txt
 
 networks:
-  test-network:
-    external:
-      name: local-test-networks
+  local-test-networks:
+    external: true
 

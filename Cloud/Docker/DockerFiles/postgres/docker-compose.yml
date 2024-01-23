@@ -15,7 +15,7 @@ services:
 
     volumes:
       # - /mnt/disks/data/postgres_db_data:/var/lib/postgresql/data
-      - /Library/A-Gobind/DockerShare/postgres_db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
       - ./configs/postgresql.conf:/etc/postgresql.conf:ro
       - ./configs/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     deploy:
@@ -26,13 +26,21 @@ services:
         reservations:
           memory: 64M
     networks:
-      - test-network
+      - local-test-networks
+
+volumes:
+  db_data:
+    # external: true
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/Library/A-Gobind/DockerShare/postgres_db_data'
 
 secrets:
   db_root_password:
     file: ./configs/db_root_password.txt
 
 networks:
-  test-network:
-    external:
-      name: local-test-networks
+  local-test-networks:
+    external: true
