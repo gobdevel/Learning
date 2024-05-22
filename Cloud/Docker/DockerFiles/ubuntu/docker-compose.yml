@@ -1,7 +1,6 @@
 # Docker Compose file for Ubuntu development machine
 # Usage: Create an external volume named ubuntu-data
 #
-version: '3.8'
 services:
   ubuntu-dev:
     image: 'ubuntu-dev:latest'
@@ -27,4 +26,8 @@ services:
 
 volumes:
   ubuntu-data:
-    external: true
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/Library/A-Gobind/DockerShare/ubuntu_data'
