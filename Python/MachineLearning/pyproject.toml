@@ -12,7 +12,10 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-dependencies = []
+dependencies = [
+    "parameterized",
+    "numpy",
+]
 
 [project.optional-dependencies]
 dev = []
