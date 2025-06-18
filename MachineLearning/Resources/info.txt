@@ -1,0 +1,6 @@
+
+Github Link - https://github.com/thomasnield/oreilly_machine_learning_from_scratch
+https://github.com/eriklindernoren/ML-From-Scratch
+
+Google Machine Learning Crash Course
+https://developers.google.com/machine-learning/crash-course
